@@ -1,14 +1,18 @@
 Containerizing a Strapi Application
 
+This explains how to containerize a Strapi application using Docker and run it locally.
+
+
 
 STEP 1: Prepare Your Strapi Project
 
 Make sure your Strapi application is created and working on your machine.
 
-If you do not have a Strapi project yet, create one:
+If you do not already have a Strapi project, create one:
 
 npx create-strapi-app@latest my-strapi-app
 cd my-strapi-app
+
 
 
 STEP 2: Build Your Strapi Project
@@ -18,10 +22,10 @@ Generate the production build so Strapi can run properly inside Docker.
 npm run build
 
 
+
 STEP 3: Create a .dockerignore File
 
-Create a file named .dockerignore in the root of your project.
-Add the files and folders that should not be copied into the Docker image, such as:
+Create a .dockerignore file in the root of your project and add entries that should not be included in the Docker image, such as:
 
 node_modules
 .git
@@ -30,28 +34,28 @@ build
 .env
 
 
-STEP 4:
-Create a Dockerfile.
-Write the instructions that tell Docker how to install, build, and run your Strapi app.
 
-docker build -t strapi-app .
+STEP 4: Create a Dockerfile
+
+Create a file named Dockerfile with the instructions for installing, building, and running Strapi inside Docker.
 
 
 
 STEP 5: Build the Docker Image
 
-Ask Docker to create an image based on your Dockerfile.
+Build the Docker image using the Dockerfile.
 
 docker build -t strapi-app .
 
 
+
 STEP 6: Run the Docker Container
 
-Start the container so Strapi runs locally on your computer.
+Start the container so Strapi runs locally on your machine.
 
 docker run -p 1337:1337 strapi-app
 
 
-Strapi will now be accessible at:
+You can now access your Strapi application at:
 
 http://localhost:1337/admin
