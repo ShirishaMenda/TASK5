@@ -1,61 +1,39 @@
-Containerizing a Strapi Application
+Dockerized Strapi + PostgreSQL + Nginx Setup
 
-This explains how to containerize a Strapi application using Docker and run it locally.
+Dockerized setup for running Strapi, PostgreSQL, and Nginx reverse proxy on a shared Docker network.
 
+1. Create Docker Network
 
+Create a custom Docker network for all services:
 
-STEP 1: Prepare Your Strapi Project
+docker network create strapi-net
 
-Make sure your Strapi application is created and working on your machine.
+2. Configure docker-compose.yml
 
-If you do not already have a Strapi project, create one:
+The docker-compose.yml includes:
 
-npx create-strapi-app@latest my-strapi-app
-cd my-strapi-app
+PostgreSQL (database)
 
+Strapi (application container)
 
+Nginx (reverse proxy for port 80 → 1337)
 
-STEP 2: Build Your Strapi Project
+All containers are connected to the same network: strapi-net.
 
-Generate the production build so Strapi can run properly inside Docker.
+3. Build Strapi Image
 
-npm run build
-
-
-
-STEP 3: Create a .dockerignore File
-
-Create a .dockerignore file in the root of your project and add entries that should not be included in the Docker image, such as:
-
-node_modules
-.git
-.cache
-build
-.env
-
-
-
-STEP 4: Create a Dockerfile
-
-Create a file named Dockerfile with the instructions for installing, building, and running Strapi inside Docker.
-
-
-
-STEP 5: Build the Docker Image
-
-Build the Docker image using the Dockerfile.
+Use the provided Dockerfile to create a Strapi image:
 
 docker build -t strapi-app .
 
+4. Start All Services
 
+Run all containers using docker-compose:
 
-STEP 6: Run the Docker Container
+docker-compose up -d
 
-Start the container so Strapi runs locally on your machine.
+5. Access Strapi Admin
 
-docker run -p 1337:1337 strapi-app
+Once all services are running, open:
 
-
-You can now access your Strapi application at:
-
-http://localhost:1337/admin
+http://localhost/admin
